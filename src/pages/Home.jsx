@@ -7,8 +7,8 @@ const FlystudioHomepage = () => {
   const [scrollOffset, setScrollOffset] = useState(0);
   const [continuousOffset, setContinuousOffset] = useState(0);
   const scrollRef = useRef(null);
-  const intervalRef = useRef(null);
-  const loopIntervalRef = useRef(null);
+  //const intervalRef = useRef(null);
+  //const loopIntervalRef = useRef(null);
   
   const tabWidth = 300; // Width per tab for smooth scrolling calculations
 
@@ -101,19 +101,17 @@ const FlystudioHomepage = () => {
       {/* Left Side - Dark Panel */}
       <div className="w-2/5 bg-gradient-to-br from-gray-900 via-black to-gray-800 flex flex-col justify-center items-start px-12 relative">
         {/* Animated background pattern */}
-        <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500 rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-purple-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        </div>
-        
-        <div className="relative z-10">
+
           {/* Company Logo - Replace with your actual logo */}
-          <div className="mb-8">
+          <div className="ml-10 mt-8">
             {/* Option 1: Image Logo - Uncomment and add your logo path */}
             <img 
               src={Logo} 
               alt="Company Logo" 
-              className="h-32 w-auto object-contain"
+              className="h-15 w-auto object-contain"
             />
             
             
@@ -133,12 +131,15 @@ const FlystudioHomepage = () => {
               </h1>
             </div> */}
           </div>
+        </div>
+        
+        
+        <div className="relative z-10">
           
           <div className="text-gray-300 text-lg mb-12 max-w-md leading-relaxed">
             {tabs[activeTab].description}
           </div>
-          
-          <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full hover:shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105">
+          <button className="px-8 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full hover:shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105">
             Get Started
           </button>
         </div>
@@ -202,7 +203,7 @@ const FlystudioHomepage = () => {
                       key={uniqueKey}
                       onClick={() => handleTabClick(actualIndex)}
                       className={`
-                        relative px-8 py-4 text-2xl font-bold transition-all duration-500 whitespace-nowrap flex-shrink-0
+                        relative px-8 py-4 text-4xl font-bold transition-all duration-500 whitespace-nowrap flex-shrink-0
                         ${isActive 
                           ? 'text-white scale-125 transform' 
                           : 'text-white/60 hover:text-white/80 hover:scale-110'
@@ -226,7 +227,7 @@ const FlystudioHomepage = () => {
                 className="h-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full transition-all duration-1000 ease-out"
                 style={{ 
                   width: '80px',
-                  transform: `translateX(${(-scrollOffset - continuousOffset) / 4}px)` // Opposite direction, slower movement
+                  transform: `translateX(${(scrollOffset - continuousOffset) / 4}px)` // Opposite direction, slower movement
                 }}
               ></div>
             </div>
@@ -245,15 +246,12 @@ const FlystudioHomepage = () => {
           </div>
         </div>
 
-        {/* Auto-play indicator */}
-        {isAutoPlaying && (
-          <div className="absolute top-8 right-8">
-            <div className="flex items-center space-x-2 text-white/80 text-sm">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span>Auto-playing</span>
-            </div>
-          </div>
-        )}
+        <div className="absolute top-8 right-8">
+          <button href="/about" className="px-8 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full hover:shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105">
+            About Us
+          </button>
+        </div>
+
 
         {/* Navigation hint */}
         <div className="absolute bottom-8 right-8 text-white/60 text-sm">
