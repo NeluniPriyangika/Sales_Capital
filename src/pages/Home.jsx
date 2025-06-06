@@ -16,32 +16,32 @@ const FlystudioHomepage = () => {
     { 
       name: 'DIGITAL MARKETING', 
       video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-      description: 'Creative digital studio specializing in innovative web experiences DM'
+      description: `We offer complete digital marketing solutions tailored to your business goals. From building strategic online campaigns to managing your presence across digital channels, we ensure your brand gets the attention it deserves. Whether it's email marketing, display advertising, or audience targeting, we help you connect with the right people at the right time.`,
     },
     { 
       name: 'SOCIAL MEDIA MARKETING', 
       video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-      description: 'Visual effects and motion graphics that bring stories to life SMM'
+      description: `Harness the power of social media platforms like Facebook, Instagram, LinkedIn, and TikTok to grow your brand and engage your audience. Our team creates compelling content, manages your communities, runs targeted ads, and analyzes performance to keep your social presence strong and effective—turning followers into loyal customers.`,
     },
     { 
       name: 'GOOGLE ADVERTISING (PPC)', 
       video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-      description: '2D and 3D animation services for films and commercials'
+      description: `Accelerate your business growth with high-performing Google Ads. We craft data-driven Pay-Per-Click campaigns that appear at the top of search results and across Google's vast Display Network. Our PPC experts optimize your ad spend to generate leads, sales, and measurable ROI while tracking every click and conversion.`,
     },
     { 
       name: 'SEO', 
       video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-      description: 'Brand identity and user experience design solutions'
+      description: `Get found online with our professional SEO services. We improve your website’s visibility on search engines through keyword research, on-page optimization, technical SEO, and high-quality backlinks. Our goal is to drive consistent, organic traffic and help you rank above competitors in Google and Bing.`,
     },
     { 
       name: 'CONTENT DEVELOPMENT', 
       video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-      description: 'Interactive installations and immersive digital experiences'
+      description: `Power your marketing with impactful content that informs, entertains, and persuades. We develop blogs, website copy, social media posts, scripts, product descriptions, and more—tailored to your brand voice and target audience. Every piece of content is designed to support your SEO, build authority, and spark engagement.`,
     },
     { 
         name: 'CREATIVE SOLUTIONS', 
         video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4',
-        description: 'Interactive installations and immersive digital experiences'
+        description:`Bring your ideas to life with our innovative creative services. We provide graphic design, branding, motion graphics, and multimedia solutions that blend strategy and aesthetics. Whether you need a new logo, an engaging video, or a complete brand refresh, we deliver bold, eye-catching work that gets noticed.`
     }
   ];
 
