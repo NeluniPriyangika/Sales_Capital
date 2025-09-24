@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.png';
 
 const FlystudioHomepage = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -8,7 +8,7 @@ const FlystudioHomepage = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const autoPlayRef = useRef(null);
   const transitionTimeoutRef = useRef(null);
-  
+
   const Logo = logo;
 
   const tabs = [
@@ -53,7 +53,7 @@ const FlystudioHomepage = () => {
   // Check for mobile viewport
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 1024); // improved breakpoint: tablets & below = mobile layout
     };
     
     checkMobile();
@@ -61,7 +61,7 @@ const FlystudioHomepage = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Auto-play functionality - changes tab every 30 seconds
+  // Auto-play functionality
   useEffect(() => {
     if (isAutoPlaying && !isMobile) {
       autoPlayRef.current = setInterval(() => {
@@ -85,7 +85,6 @@ const FlystudioHomepage = () => {
     return () => clearTimeout(transitionTimeoutRef.current);
   }, [isTransitioning]);
 
-  // Navigation functions
   const navigateToPage = (route) => {
     console.log(`Navigating to: ${route}`);
     alert(`This would navigate to: ${route}`);
@@ -101,8 +100,6 @@ const FlystudioHomepage = () => {
     setIsAutoPlaying(false);
     setIsTransitioning(true);
     setActiveTab(index);
-    
-    // Resume autoplay after 20 seconds of manual interaction
     setTimeout(() => setIsAutoPlaying(true), 20000);
   };
 
@@ -116,7 +113,6 @@ const FlystudioHomepage = () => {
       setActiveTab(prev => (prev - 1 + tabs.length) % tabs.length);
     }
     
-    // Resume autoplay after 20 seconds
     setTimeout(() => setIsAutoPlaying(true), 20000);
   };
 
@@ -128,28 +124,25 @@ const FlystudioHomepage = () => {
     handleManualNavigation(direction);
   };
 
+  /** ---------------- MOBILE/TABLET LAYOUT ---------------- */
   if (isMobile) {
     return (
       <div className="min-h-screen w-full bg-black flex flex-col">
-        {/* Mobile Header */}
+        {/* Header */}
         <div className="flex justify-between items-center p-4 bg-gradient-to-r from-gray-900 to-black">
           <div className="text-white text-xl font-bold">
-            <img 
-              src={Logo} 
-              alt="Company Logo" 
-              className="h-10 w-auto object-contain"
-            />
+            <img src={Logo} alt="Company Logo" className="h-8 sm:h-10 w-auto object-contain" />
           </div>
           <button 
             onClick={() => navigateToPage('/about')}
-            className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm font-semibold rounded-full"
+            className="px-3 sm:px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs sm:text-sm font-semibold rounded-full"
           >
             About Us
           </button>
         </div>
 
-        {/* Mobile Video Section */}
-        <div className="relative h-64 overflow-hidden">
+        {/* Video */}
+        <div className="relative h-56 sm:h-72 md:h-96 overflow-hidden">
           {tabs.map((tab, index) => (
             <video
               key={index}
@@ -166,27 +159,27 @@ const FlystudioHomepage = () => {
           ))}
           <div className="absolute inset-0 bg-black/40"></div>
           
-          {/* Mobile Navigation Arrows */}
+          {/* Arrows */}
           <button 
             onClick={() => handleManualNavigation('prev')}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+            className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
           >
             ←
           </button>
           <button 
             onClick={() => handleManualNavigation('next')}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+            className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
           >
             →
           </button>
         </div>
 
-        {/* Mobile Content */}
-        <div className="flex-1 bg-gradient-to-br from-gray-900 via-black to-gray-800 p-6">
-          <h2 className="text-white text-2xl font-bold mb-4 transform transition-all duration-800">
+        {/* Content */}
+        <div className="flex-1 bg-gradient-to-br from-gray-900 via-black to-gray-800 p-4 sm:p-6">
+          <h2 className="text-white text-xl sm:text-2xl font-bold mb-4">
             {tabs[activeTab].name}
           </h2>
-          <p className="text-gray-300 text-base leading-relaxed mb-6 transform transition-all duration-800">
+          <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-6">
             {tabs[activeTab].description}
           </p>
           <button 
@@ -197,14 +190,14 @@ const FlystudioHomepage = () => {
           </button>
         </div>
 
-        {/* Mobile Tab Navigation */}
-        <div className="bg-black/90 p-4">
-          <div className="flex overflow-x-auto space-x-4 pb-2">
+        {/* Tabs row */}
+        <div className="bg-black/90 p-3 sm:p-4">
+          <div className="flex overflow-x-auto space-x-3 sm:space-x-4 pb-2">
             {tabs.map((tab, index) => (
               <button
                 key={index}
                 onClick={() => handleTabClick(index)}
-                className={`flex-shrink-0 px-4 py-2 text-sm font-medium whitespace-nowrap rounded-full transition-all duration-300 ${
+                className={`flex-shrink-0 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium whitespace-nowrap rounded-full transition-all duration-300 ${
                   index === activeTab 
                     ? 'bg-blue-500 text-white scale-105' 
                     : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
@@ -216,13 +209,13 @@ const FlystudioHomepage = () => {
           </div>
         </div>
 
-        {/* Mobile Progress Indicator */}
-        <div className="flex justify-center space-x-2 py-4 bg-black">
+        {/* Progress dots */}
+        <div className="flex justify-center space-x-1 sm:space-x-2 py-3 sm:py-4 bg-black">
           {tabs.map((_, index) => (
             <div
               key={index}
               className={`h-1 rounded-full transition-all duration-500 ${
-                index === activeTab ? 'w-8 bg-blue-500' : 'w-4 bg-gray-600'
+                index === activeTab ? 'w-6 sm:w-8 bg-blue-500' : 'w-3 sm:w-4 bg-gray-600'
               }`}
             />
           ))}
@@ -231,81 +224,55 @@ const FlystudioHomepage = () => {
     );
   }
 
-  // Desktop Layout
+  /** ---------------- DESKTOP LAYOUT ---------------- */
   return (
     <div className="h-screen w-full flex overflow-hidden bg-black" onWheel={handleWheel}>
-      {/* Left Side - Content Panel (Connected to slider) */}
-      <div className="w-1/4 bg-gradient-to-br from-gray-900 via-black to-gray-800 flex flex-col justify-center items-start px-15 relative overflow-hidden">
-        {/* Animated background pattern */}
+      {/* Left Panel */}
+      <div className="w-1/3 xl:w-1/4 bg-gradient-to-br from-gray-900 via-black to-gray-800 flex flex-col justify-center items-start px-6 lg:px-12 relative overflow-hidden">
+        {/* Glow Background */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500 rounded-full blur-3xl animate-pulse opacity-20"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-purple-500 rounded-full blur-3xl animate-pulse delay-1000 opacity-20"></div>
+          <div className="absolute top-1/4 left-1/4 w-40 md:w-64 h-40 md:h-64 bg-blue-500 rounded-full blur-3xl animate-pulse opacity-20"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-32 md:w-48 h-32 md:h-48 bg-purple-500 rounded-full blur-3xl animate-pulse delay-1000 opacity-20"></div>
         </div>
 
         {/* Logo */}
-        <div className="absolute top-8 left-12">
-          <img 
-            src={Logo} 
-            alt="Company Logo" 
-            className="h-12 w-auto object-contain"
-          />
+        <div className="absolute top-6 lg:top-8 left-6 lg:left-12">
+          <img src={Logo} alt="Company Logo" className="h-8 md:h-10 lg:h-12 w-auto object-contain" />
         </div>
         
-        {/* Content that slides with tabs */}
-        <div className="relative z-10 transform transition-all duration-800 ease-in-out">
-          <h1 className="text-white text-4xl font-bold mb-8 transform transition-all duration-800">
+        {/* Text */}
+        <div className="relative z-10 max-w-md">
+          <h1 className="text-white text-2xl md:text-3xl lg:text-4xl font-bold mb-6">
             {tabs[activeTab].name}
           </h1>
-          <div className="text-gray-300 text-lg mb-12 max-w-md leading-relaxed transform transition-all duration-800">
+          <p className="text-gray-300 text-sm md:text-base lg:text-lg mb-8 leading-relaxed">
             {tabs[activeTab].description}
-          </div>
+          </p>
           <button 
             onClick={handleGetStarted}
-            className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full hover:shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500/50"
+            className="px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
           >
             Get Started
           </button>
         </div>
 
-        {/* Progress indicator */}
-        <div className="absolute bottom-12 left-12 flex space-x-3">
+        {/* Progress Indicators */}
+        <div className="absolute bottom-6 lg:bottom-12 left-6 lg:left-12 flex space-x-2 md:space-x-3">
           {tabs.map((_, index) => (
             <button
               key={index}
               onClick={() => handleTabClick(index)}
-              className={`h-2 rounded-full transition-all duration-500 hover:opacity-100 focus:outline-none ${
-                index === activeTab ? 'w-12 bg-blue-500' : 'w-6 bg-gray-600 opacity-60 hover:bg-gray-500'
+              className={`h-1.5 md:h-2 rounded-full transition-all duration-500 ${
+                index === activeTab ? 'w-8 md:w-12 bg-blue-500' : 'w-4 md:w-6 bg-gray-600 opacity-60'
               }`}
             />
           ))}
         </div>
-
-        {/* Manual navigation controls - moved to left side only 
-        <div className="absolute bottom-12 right-12 flex space-x-4">
-          <button 
-            onClick={() => handleManualNavigation('prev')}
-            className="p-3 bg-white/10 text-white rounded-full hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50"
-            disabled={isTransitioning}
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button 
-            onClick={() => handleManualNavigation('next')}
-            className="p-3 bg-white/10 text-white rounded-full hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50"
-            disabled={isTransitioning}
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>*/}
       </div>
 
-      {/* Right Side - Video Background with Horizontal Tab Slider */}
-      <div className="w-3/4 relative overflow-hidden">
-        {/* Video Background - Contained within right side */}
+      {/* Right Panel */}
+      <div className="flex-1 relative overflow-hidden">
+        {/* Background Video */}
         <div className="absolute inset-0 w-full h-full">
           {tabs.map((tab, index) => (
             <video
@@ -323,12 +290,12 @@ const FlystudioHomepage = () => {
           ))}
         </div>
 
-        {/* Video overlay - constrained to right side */}
+        {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
 
-        {/* Horizontal Tab Carousel - Single tab with slide + zoom animations */}
-        <div className="absolute bottom-10 left-0 right-0 px-8 overflow-hidden">
-          <div className="relative h-50 flex justify-center items-center">
+        {/* Tab Carousel */}
+        <div className="absolute bottom-10 left-0 right-0 px-4 sm:px-8">
+          <div className="relative h-40 flex justify-center items-center">
             {tabs.map((tab, index) => {
               const isActive = index === activeTab;
               const isPrevious = index === (activeTab - 1 + tabs.length) % tabs.length;
@@ -340,29 +307,20 @@ const FlystudioHomepage = () => {
               let zIndexValue = 0;
               
               if (isActive) {
-                // Current active tab - center position, full scale
                 transformStyle = 'translateX(-50%) translateY(0)';
                 opacityValue = 1;
                 scaleValue = isTransitioning ? 1.1 : 1;
                 zIndexValue = 10;
               } else if (isPrevious) {
-                // Previous tab - sliding out to left
                 transformStyle = 'translateX(-200%) translateY(10px)';
                 opacityValue = isTransitioning ? 0.7 : 0;
                 scaleValue = 0.6;
                 zIndexValue = 5;
               } else if (isNext) {
-                // Next tab - coming in from right
                 transformStyle = 'translateX(100%) translateY(10px)';
                 opacityValue = isTransitioning ? 0.7 : 0;
                 scaleValue = 0.6;
                 zIndexValue = 5;
-              } else {
-                // Other tabs - hidden
-                transformStyle = 'translateX(-50%) translateY(20px)';
-                opacityValue = 0;
-                scaleValue = 0.3;
-                zIndexValue = 0;
               }
               
               return (
@@ -370,14 +328,11 @@ const FlystudioHomepage = () => {
                   key={tab.name}
                   onClick={() => handleTabClick(index)}
                   disabled={isTransitioning}
-                  className={`
-                    absolute px-8 py-4 text-lg font-semibold transition-all duration-800 
-                    group focus:outline-none backdrop-blur-sm border border-white/30 rounded-lg
-                    text-white bg-white/20 shadow-2xl
-                    ${isActive ? 'shadow-blue-500/40' : 'shadow-black/20'}
-                  `}
+                  className={`absolute px-6 md:px-8 py-3 md:py-4 text-sm md:text-lg font-semibold transition-all duration-800 group backdrop-blur-sm border border-white/30 rounded-lg text-white bg-white/20 ${
+                    isActive ? 'shadow-2xl shadow-blue-500/40' : 'shadow-lg shadow-black/20'
+                  }`}
                   style={{ 
-                    minWidth: '300px',
+                    minWidth: '220px',
                     left: '50%',
                     top: '50%',
                     transform: `${transformStyle} scale(${scaleValue})`,
@@ -386,9 +341,7 @@ const FlystudioHomepage = () => {
                     transition: 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
                   }}
                 >
-                  <span className="relative z-10 whitespace-nowrap block">{tab.name}</span>
-                  
-                  {/* Active glow effects - only for active tab */}
+                  <span className="relative z-10 whitespace-nowrap">{tab.name}</span>
                   {isActive && (
                     <>
                       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/40 to-purple-600/40 rounded-lg animate-pulse"></div>
@@ -396,21 +349,13 @@ const FlystudioHomepage = () => {
                       <div className="absolute -inset-4 bg-gradient-to-r from-blue-400/15 to-purple-500/15 rounded-2xl blur-xl"></div>
                     </>
                   )}
-                  
-                  {/* Subtle glow for transitioning tabs */}
-                  {(isPrevious || isNext) && isTransitioning && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-lg"></div>
-                  )}
-                  
-                  {/* Hover effect */}
-                  <div className="absolute inset-0 bg-white/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* Tab Navigation Controls */}
+        {/* Arrows */}
         <div className="absolute bottom-6 left-8 flex space-x-4">
           <button 
             onClick={() => handleManualNavigation('prev')}
@@ -432,54 +377,34 @@ const FlystudioHomepage = () => {
           </button>
         </div>
 
-        {/* About Us Button - Top right, within right side bounds */}
-        <div className="absolute top-8 right-8">
+        {/* About Us */}
+        <div className="absolute top-6 right-6 sm:top-8 sm:right-8">
           <button 
             onClick={() => navigateToPage('/about')}
-            className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full hover:shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500/50 backdrop-blur-sm"
+            className="px-4 md:px-6 py-2 md:py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full hover:shadow-2xl transition-all transform hover:scale-105 backdrop-blur-sm text-xs md:text-sm"
           >
             About Us
           </button>
         </div>
 
-        {/* Navigation hint - Bottom right 
-        <div className="absolute bottom-6 right-8 text-white/70 text-sm backdrop-blur-sm bg-black/20 px-3 py-2 rounded-lg">
-          <div className="flex items-center space-x-2">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
-            </svg>
-            <span>Auto-slides every 30s</span>
-          </div>
-        </div>*/}
-
-        {/* Auto-play indicator - Top left of right side */}
+        {/* Auto-play badge */}
         {isAutoPlaying && (
-          <div className="absolute top-8 left-8">
-            <div className="flex items-center space-x-2 text-white/70 text-sm backdrop-blur-sm bg-black/20 px-3 py-2 rounded-lg">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span>Auto-playing</span>
+          <div className="absolute top-6 left-6 sm:top-8 sm:left-8">
+            <div className="flex items-center space-x-1 sm:space-x-2 text-white/70 text-xs sm:text-sm">
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-400 animate-pulse"></div>
+              <span>Auto-play</span>
             </div>
           </div>
         )}
 
-        {/* Progress bar for current slide */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-white/10">
+        {/* Progress Bar */}
+        <div className="absolute top-0 left-0 right-0 w-full max-w-full h-1 bg-white/10">
           <div 
-            className="h-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-300"
-            style={{
-              width: isAutoPlaying ? '100%' : '0%',
-              animation: isAutoPlaying ? 'progress 30s linear infinite' : 'none'
-            }}
+            className="h-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-[5000ms] ease-linear"
+            style={{ width: isAutoPlaying ? '100%' : '0%' }}
           ></div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes progress {
-          from { width: 0% }
-          to { width: 100% }
-        }
-      `}</style>
     </div>
   );
 };
