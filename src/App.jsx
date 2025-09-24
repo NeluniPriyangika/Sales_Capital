@@ -10,8 +10,7 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
-      
+    <>      
       <Homepage />
       {/* Add more sections like About, Portfolio etc */}
     </>
