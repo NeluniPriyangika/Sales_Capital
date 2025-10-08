@@ -6,6 +6,7 @@ import './App.css'
 import Home from './pages/Home'
 import VideoCreating from './pages/VideoCreating'
 import Portfolio from './pages/Portfolio'
+import Team from './pages/Team'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/video-creating" element={<VideoCreating/>} />
         <Route path="/portfolio" element={<Portfolio/>} />
+        <Route path="/team" element={<Team/>} />
       </Routes>
     </Router>
   )

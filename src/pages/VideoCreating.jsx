@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Play, Heart, Video, Briefcase, Menu, X, Facebook, Youtube, Linkedin, Instagram } from 'lucide-react';
-import { FaTiktok, FaWhatsapp } from "react-icons/fa"; // TikTok + WhatsApp not in lucide, so using react-icons
-import logo from "../assets/logo.png"; // Your logo file
+import { Play, Heart, Video, Briefcase, Menu, X, Facebook, Youtube, Linkedin, Instagram, ChevronDown } from 'lucide-react';
+import { FaTiktok, FaWhatsapp } from "react-icons/fa";
+import logo from "../assets/logo.png";
 import HeroVideo from '../assets/videos/video crating hero.mp4'
 import phone1 from '../assets/images/Frame1.avif'
 import phone2 from '../assets/images/Frame2.avif'
@@ -16,6 +16,10 @@ const CreativeAgencyPortfolio = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -96,8 +100,7 @@ const CreativeAgencyPortfolio = () => {
           scrolled
             ? "bg-black/95 backdrop-blur-sm pt-7 pb-7 py-4"
             : "bg-transparent py-6"
-        }`}
-      >
+        }`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative flex justify-between items-center">
             {/* Left: Social Icons */}
@@ -130,19 +133,67 @@ const CreativeAgencyPortfolio = () => {
             </div>
 
             {/* Right: Desktop Menu */}
-            <div className="hidden md:flex space-x-8 text-sm font-medium tracking-wide">
+            <div className="hidden md:flex space-x-10 text-sm font-medium tracking-wide">
               <button onClick={() => navigate('/')} className="hover:text-purple-400 transition-colors">
                 HOME
               </button>
-              <a href="#about" className="hover:text-purple-400 transition-colors">
-                ABOUT
-              </a>
-              <a href="#services" className="hover:text-purple-400 transition-colors">
-                SERVICES
-              </a>
-              <a href="/portfolio" className="hover:text-purple-400 transition-colors">
-                PORTFOLIO
-              </a>
+              
+              {/* Services Dropdown */}
+              <div 
+                className="relative"
+                onMouseEnter={() => setServicesOpen(true)}
+                onMouseLeave={() => setServicesOpen(false)}
+              >
+                <button className="flex items-center hover:text-purple-400 transition-colors">
+                  SERVICES
+                  <ChevronDown className="w-4 h-4 ml-1" />
+                </button>
+                {servicesOpen && (
+                  <div className="absolute top-full left-0 mt-1 w-56 bg-black/95 backdrop-blur-sm rounded-lg shadow-xl py-2 border border-purple-500/20">
+                    <a href="#" className="block px-4 py-2 hover:bg-purple-500/20 hover:text-purple-400 transition-colors">
+                      Video Content creating
+                    </a>
+                    <a href="#" className="block px-4 py-2 hover:bg-purple-500/20 hover:text-purple-400 transition-colors">
+                      Social Media Marketing
+                    </a>
+                    <a href="#" className="block px-4 py-2 hover:bg-purple-500/20 hover:text-purple-400 transition-colors">
+                      Google Advertising (PPC)
+                    </a>
+                    <a href="#" className="block px-4 py-2 hover:bg-purple-500/20 hover:text-purple-400 transition-colors">
+                      SEO
+                    </a>
+                    <a href="#" className="block px-4 py-2 hover:bg-purple-500/20 hover:text-purple-400 transition-colors">
+                      Content Development
+                    </a>
+                    <a href="#" className="block px-4 py-2 hover:bg-purple-500/20 hover:text-purple-400 transition-colors">
+                      Creative Solutions
+                    </a>
+                  </div>
+                )}
+              </div>
+
+              {/* About Dropdown */}
+              <div 
+                className="relative"
+                onMouseEnter={() => setAboutOpen(true)}
+                onMouseLeave={() => setAboutOpen(false)}
+              >
+                <button className="flex items-center hover:text-purple-400 transition-colors">
+                  ABOUT
+                  <ChevronDown className="w-4 h-4 ml-1" />
+                </button>
+                {aboutOpen && (
+                  <div className="absolute top-full left-0 mt-1 w-48 bg-black/95 backdrop-blur-sm rounded-lg shadow-xl py-2 border border-purple-500/20">
+                    <a href="#" className="block px-4 py-2 hover:bg-purple-500/20 hover:text-purple-400 transition-colors">
+                      Who We Are ?
+                    </a>
+                    <a href="/team" className="block px-4 py-2 hover:bg-purple-500/20 hover:text-purple-400 transition-colors">
+                      Our Team
+                    </a>
+                  </div>
+                )}
+              </div>
+              
               <a href="#contact" className="hover:text-purple-400 transition-colors">
                 CONTACT
               </a>
@@ -173,27 +224,93 @@ const CreativeAgencyPortfolio = () => {
               >
                 HOME
               </button>
-              <a
-                href="#about"
-                className="block hover:text-purple-400 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                ABOUT
-              </a>
-              <a
-                href="#services"
-                className="block hover:text-purple-400 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                SERVICES
-              </a>
-              <a
-                href="#portfolio"
-                className="block hover:text-purple-400 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                PORTFOLIO
-              </a>
+              
+              {/* Mobile Services Dropdown */}
+              <div>
+                <button
+                  onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                  className="flex items-center justify-between hover:text-purple-400 transition-colors w-full text-left"
+                >
+                  SERVICES
+                  <ChevronDown className={`w-4 h-4 transition-transform ${mobileServicesOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {mobileServicesOpen && (
+                  <div className="pl-4 space-y-2 mt-2">
+                    <a
+                      href="#"
+                      className="block hover:text-purple-400 transition-colors py-1 text-left"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Video Content creating
+                    </a>
+                    <a
+                      href="#video-creation"
+                      className="block hover:text-purple-400 transition-colors py-1 text-left"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Social Media Marketing
+                    </a>
+                    <a
+                      href="#social-media"
+                      className="block hover:text-purple-400 transition-colors py-1 text-left"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Google Advertising (PPC)
+                    </a>
+                    <a
+                      href="#social-media"
+                      className="block hover:text-purple-400 transition-colors py-1 text-left"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      SEO
+                    </a>
+                    <a
+                      href="#social-media"
+                      className="block hover:text-purple-400 transition-colors py-1 text-left"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Content Development
+                    </a>
+                    <a
+                      href="#social-media"
+                      className="block hover:text-purple-400 transition-colors py-1 text-left"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Creative Solutions
+                    </a>
+                  </div>
+                )}
+              </div>
+
+              {/* Mobile About Dropdown */}
+              <div>
+                <button
+                  onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
+                  className="flex items-center justify-between hover:text-purple-400 transition-colors w-full text-left"
+                >
+                  ABOUT
+                  <ChevronDown className={`w-4 h-4 transition-transform ${mobileAboutOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {mobileAboutOpen && (
+                  <div className="pl-4 space-y-2 mt-2">
+                    <a
+                      href="#who-we-are"
+                      className="block hover:text-purple-400 transition-colors py-1 text-left"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Who We Are ?
+                    </a>
+                    <a
+                      href="#our-team"
+                      className="block hover:text-purple-400 transition-colors py-1 text-left"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Our Team
+                    </a>
+                  </div>
+                )}
+              </div>
+              
               <a
                 href="#contact"
                 className="block hover:text-purple-400 transition-colors"
@@ -235,21 +352,6 @@ const CreativeAgencyPortfolio = () => {
                         OBSESSIONS.
                     </span>
                 </h1>
-
-                {/* Phone Mockups 
-                <div className="flex justify-center items-center gap-4 mt-16 flex-wrap">
-                    {[1, 2, 3].map((i) => (
-                    <div
-                        key={i}
-                        className="w-32 h-64 sm:w-40 sm:h-80 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl shadow-2xl transform hover:scale-105 transition-transform duration-300 relative overflow-hidden"
-                    >
-                        <div className="absolute inset-2 bg-black rounded-2xl"></div>
-                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                        <Play className="w-8 h-8 text-white opacity-70" />
-                        </div>
-                    </div>
-                    ))}
-                </div>*/}
             </div>
         </div>
       </section>
@@ -335,7 +437,7 @@ const CreativeAgencyPortfolio = () => {
       </section>
 
       <section id="contact" className="h-screen flex items-center justify-center relative overflow-hidden">
-        {/* The “cut-out” text */}
+        {/* The "cut-out" text */}
         <div className="relative z-10 text-center">
           <h1
             className="
@@ -343,7 +445,7 @@ const CreativeAgencyPortfolio = () => {
               font-bold
               text-transparent
               bg-clip-text
-              bg-fixed   /* optional — to fix bg relative to viewport */
+              bg-fixed
               bg-cover
               bg-center
               "
