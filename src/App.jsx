@@ -6,7 +6,9 @@ import './App.css'
 import Home from './pages/Home'
 import VideoCreating from './pages/VideoCreating'
 import Portfolio from './pages/Portfolio'
+import About from './pages/About'
 import Team from './pages/Team'
+import ContactUs from './pages/ContactUs'
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path="/video-creating" element={<VideoCreating/>} />
         <Route path="/portfolio" element={<Portfolio/>} />
         <Route path="/team" element={<Team/>} />
+        <Route path="/about" element={<About/>} />
+        <Route path="/contact-us" element={<ContactUs/>} />
       </Routes>
     </Router>
   )
