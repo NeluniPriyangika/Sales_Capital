@@ -156,7 +156,7 @@ const CreativeAgencyPortfolio = () => {
                     <a href="#" className="block px-4 py-2 hover:bg-purple-500/20 hover:text-purple-400 transition-colors">
                       Social Media Marketing
                     </a>
-                    <a href="#" className="block px-4 py-2 hover:bg-purple-500/20 hover:text-purple-400 transition-colors">
+                    <a href="/google-advertising" className="block px-4 py-2 hover:bg-purple-500/20 hover:text-purple-400 transition-colors">
                       Google Advertising (PPC)
                     </a>
                     <a href="#" className="block px-4 py-2 hover:bg-purple-500/20 hover:text-purple-400 transition-colors">

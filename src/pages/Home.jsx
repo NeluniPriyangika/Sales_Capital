@@ -58,9 +58,9 @@ const FlystudioHomepage = () => {
   const navigationItems = [
       { name: 'Home', route: '/' },
       { name: 'Video Contnet creating', route: '/video-creating' },
-      { name: 'Social Media Marketing', route: '/services' },
-      { name: 'Google Advertising (PPC)', route: '/portfolio' },
-      { name: 'SEO', route: '/contact' },//Website Development and SEO *************************
+      { name: 'Social Media Marketing', route: '#' },
+      { name: 'Google Advertising (PPC)', route: '/google-advertising' },
+      { name: 'SEO', route: '#' },//Website Development and SEO *************************
       { name: 'Content Development', route: '/blog' },//consumer promotion *************************
       { name: 'Creative Solutions', route: '/blog' }
 
