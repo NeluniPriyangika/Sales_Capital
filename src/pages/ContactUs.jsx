@@ -11,15 +11,75 @@ const ContactUs = () => {
     message: ''
   });
 
+  const [errors, setErrors] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     });
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: ''
+      });
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Reset errors
+    const newErrors = {
+      name: '',
+      email: '',
+      subject: '',
+      message: ''
+    };
+    
+    let hasError = false;
+    
+    // Validate required fields
+    if (!formData.name.trim()) {
+      newErrors.name = 'Please enter your name';
+      hasError = true;
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'Please enter your email address';
+      hasError = true;
+    } else {
+      // Basic email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        newErrors.email = 'Please enter a valid email address';
+        hasError = true;
+      }
+    }
+    
+    if (!formData.subject.trim()) {
+      newErrors.subject = 'Please enter a subject';
+      hasError = true;
+    }
+    
+    if (!formData.message.trim()) {
+      newErrors.message = 'Please enter your message';
+      hasError = true;
+    }
+    
+    setErrors(newErrors);
+    
+    if (hasError) {
+      return;
+    }
+    
     console.log('Form submitted:', formData);
     alert('Thank you for contacting us! We will get back to you soon.');
     setFormData({
@@ -121,10 +181,13 @@ const ContactUs = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full pl-12 pr-4 py-3 rounded-full border-2 border-gray-300 focus:border-purple-500 focus:outline-none transition-colors"
+                    className={`w-full pl-12 pr-4 py-3 rounded-full border-2 ${errors.name ? 'border-red-500' : 'border-gray-300'} focus:border-purple-500 focus:outline-none transition-colors`}
                     placeholder="Enter your name"
                   />
                 </div>
+                {errors.name && (
+                  <p className="text-red-500 text-sm mt-1 ml-4">{errors.name}</p>
+                )}
               </div>
 
               {/* Email & Phone */}
@@ -140,10 +203,13 @@ const ContactUs = () => {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full pl-12 pr-4 py-3 rounded-full border-2 border-gray-300 focus:border-purple-500 focus:outline-none transition-colors"
+                      className={`w-full pl-12 pr-4 py-3 rounded-full border-2 ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:border-purple-500 focus:outline-none transition-colors`}
                       placeholder="your@email.com"
                     />
                   </div>
+                  {errors.email && (
+                    <p className="text-red-500 text-sm mt-1 ml-4">{errors.email}</p>
+                  )}
                 </div>
 
                 <div>
@@ -174,9 +240,12 @@ const ContactUs = () => {
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-full border-2 border-gray-300 focus:border-purple-500 focus:outline-none transition-colors"
+                  className={`w-full px-4 py-3 rounded-full border-2 ${errors.subject ? 'border-red-500' : 'border-gray-300'} focus:border-purple-500 focus:outline-none transition-colors`}
                   placeholder="How can we help you?"
                 />
+                {errors.subject && (
+                  <p className="text-red-500 text-sm mt-1 ml-4">{errors.subject}</p>
+                )}
               </div>
 
               {/* Message */}
@@ -191,10 +260,13 @@ const ContactUs = () => {
                     value={formData.message}
                     onChange={handleChange}
                     rows={5}
-                    className="w-full pl-12 pr-4 py-3 rounded-2xl border-2 border-gray-300 focus:border-purple-500 focus:outline-none transition-colors resize-none"
+                    className={`w-full pl-12 pr-4 py-3 rounded-2xl border-2 ${errors.message ? 'border-red-500' : 'border-gray-300'} focus:border-purple-500 focus:outline-none transition-colors resize-none`}
                     placeholder="Tell us more about your project..."
                   />
                 </div>
+                {errors.message && (
+                  <p className="text-red-500 text-sm mt-1 ml-4">{errors.message}</p>
+                )}
               </div>
 
               {/* Submit Button */}
