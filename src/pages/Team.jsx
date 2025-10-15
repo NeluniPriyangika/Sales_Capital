@@ -267,10 +267,8 @@ const Team = () => {
                   <video
                     src={selectedMember.video}
                     className="w-full h-full object-cover shadow-xl rounded-lg"
-                    controls
                     autoPlay
                     loop
-                    muted
                   />
                 </div>
 
