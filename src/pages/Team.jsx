@@ -6,6 +6,7 @@ import team01 from '../assets/videos/Team/Team01.mp4'
 import team02 from '../assets/videos/Team/Team02.mp4'
 import team03 from '../assets/videos/Team/Team03.mp4'
 import team04 from '../assets/videos/Team/Team04.mp4'
+
 const Team = () => {
   const teamMembers = [
     {
@@ -42,10 +43,13 @@ const Team = () => {
     }
   ];
 
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [fade, setFade] = useState(true);
   const [selectedMember, setSelectedMember] = useState(null);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [playingVideoIndex, setPlayingVideoIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -55,9 +59,17 @@ const Team = () => {
         setFade(true);
       }, 300);
     }, 4000);
-
     return () => clearInterval(interval);
   }, [teamMembers.length]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); 
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const currentMember = teamMembers[currentIndex];
 
@@ -67,27 +79,27 @@ const Team = () => {
       <Navbar/>
 
       {/* Hero Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 md:pt-32 pb-12 sm:pb-16 md:pb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center">
           {/* Left Content */}
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight">
+          <div className="space-y-6 sm:space-y-8">
+            <div className="space-y-3 sm:space-y-4">
+              <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 leading-tight">
                 Finances<br />
                 figured out<br />
                 for you
               </h1>
-              <p className="text-xl md:text-2xl text-gray-700 max-w-lg">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700 max-w-lg">
                 Our expert team makes managing your money simple and stress-free
               </p>
             </div>
             
-            <button className="bg-purple-600 text-white px-10 py-4 rounded-full hover:bg-purple-700 transition-all duration-300 text-lg font-semibold shadow-lg hover:shadow-xl hover:scale-105">
+            <button className="bg-purple-600 text-white px-8 sm:px-10 py-3 sm:py-4 rounded-full hover:bg-purple-700 transition-all duration-300 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl hover:scale-105">
               Get started
             </button>
             
             {/* Dots Indicator */}
-            <div className="flex space-x-3 pt-2">
+            <div className="flex space-x-2 sm:space-x-3 pt-2">
               {teamMembers.map((_, index) => (
                 <button
                   key={index}
@@ -98,10 +110,10 @@ const Team = () => {
                       setFade(true);
                     }, 300);
                   }}
-                  className={`h-2.5 rounded-full transition-all duration-300 ${
+                  className={`h-2 sm:h-2.5 rounded-full transition-all duration-300 ${
                     index === currentIndex 
-                      ? 'w-10 bg-black' 
-                      : 'w-2.5 bg-gray-600 hover:bg-gray-400'
+                      ? 'w-8 sm:w-10 bg-black' 
+                      : 'w-2 sm:w-2.5 bg-gray-600 hover:bg-gray-400'
                   }`}
                   aria-label={`View ${teamMembers[index].name}`}
                 />
@@ -111,10 +123,10 @@ const Team = () => {
       {/* Right Video - Auto changing */}
           <div className="relative flex justify-center items-center">
             <div className={`transition-opacity duration-500 w-full max-w-2xl ${fade ? 'opacity-100' : 'opacity-0'}`}>
-              <div className="relative rounded-2xl overflow-hidden shadow-xl">
+              <div className="relative rounded-xl sm:rounded-2xl overflow-hidden shadow-xl">
                 <video
                   src={currentMember.video}
-                  className="w-full h-[500px] md:h-[600px] object-cover"
+                  className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] object-cover"
                   autoPlay
                   loop
                   muted
@@ -127,50 +139,50 @@ const Team = () => {
       </div>
 
       {/* What We Do Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 mb-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 mb-4 sm:mb-6">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
             What we do
           </h2>
-          <p className="text-lg text-gray-700">
+          <p className="text-base sm:text-lg text-gray-700">
             Simple solutions to start your financial journey
           </p>
         </div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 space-y-4 hover:shadow-xl transition-all duration-300 border border-purple-200 hover:border-purple-400">
-            <h3 className="text-2xl font-bold text-gray-900">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12">
+          <div className="bg-white/60 backdrop-blur-sm rounded-xl sm:rounded-2xl p-6 sm:p-8 space-y-3 sm:space-y-4 hover:shadow-xl transition-all duration-300 border border-purple-200 hover:border-purple-400">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
               Financial Planning
             </h3>
-            <p className="text-gray-700 leading-relaxed">
+            <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
               Comprehensive strategies to help you reach your financial goals and secure your future with confidence.
             </p>
           </div>
 
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 space-y-4 hover:shadow-xl transition-all duration-300 border border-pink-200 hover:border-pink-400">
-            <h3 className="text-2xl font-bold text-gray-900">
+          <div className="bg-white/60 backdrop-blur-sm rounded-xl sm:rounded-2xl p-6 sm:p-8 space-y-3 sm:space-y-4 hover:shadow-xl transition-all duration-300 border border-pink-200 hover:border-pink-400">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
               Investment Management
             </h3>
-            <p className="text-gray-700 leading-relaxed">
+            <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
               Expert guidance to grow your wealth through smart investment strategies tailored to your risk profile.
             </p>
           </div>
 
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 space-y-4 hover:shadow-xl transition-all duration-300 border border-violet-200 hover:border-violet-400">
-            <h3 className="text-2xl font-bold text-gray-900">
+          <div className="bg-white/60 backdrop-blur-sm rounded-xl sm:rounded-2xl p-6 sm:p-8 space-y-3 sm:space-y-4 hover:shadow-xl transition-all duration-300 border border-violet-200 hover:border-violet-400">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
               Tax Optimization
             </h3>
-            <p className="text-gray-700 leading-relaxed">
+            <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
               Maximize your returns with strategic tax planning and consulting services from certified professionals.
             </p>
           </div>
 
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 space-y-4 hover:shadow-xl transition-all duration-300 border border-fuchsia-200 hover:border-fuchsia-400">
-            <h3 className="text-2xl font-bold text-gray-900">
+          <div className="bg-white/60 backdrop-blur-sm rounded-xl sm:rounded-2xl p-6 sm:p-8 space-y-3 sm:space-y-4 hover:shadow-xl transition-all duration-300 border border-fuchsia-200 hover:border-fuchsia-400">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
               Retirement Planning
             </h3>
-            <p className="text-gray-700 leading-relaxed">
+            <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
               Build a secure retirement with personalized plans that ensure financial freedom in your golden years.
             </p>
           </div>
@@ -178,26 +190,26 @@ const Team = () => {
 
         {/* CTA Button */}
         <div className="text-center">
-          <button className="bg-purple-600 text-white px-10 py-4 rounded-full hover:bg-purple-700 transition-all duration-300 text-lg font-semibold shadow-lg hover:shadow-xl hover:scale-105">
+          <button className="bg-purple-600 text-white px-8 sm:px-10 py-3 sm:py-4 rounded-full hover:bg-purple-700 transition-all duration-300 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl hover:scale-105">
             Get started
           </button>
         </div>
       </div>
     
     {/* Our Team Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 md:py-14">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
             Guides that help you grow
           </h2>
-          <p className="text-lg text-gray-700 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-700 max-w-2xl mx-auto">
             Meet the financial advisors behind your success
           </p>
         </div>
 
-        {/* Team Members - Single Row with Alternating Heights */}
-        <div className="flex justify-center mb-12 px-4">
-          <div className="flex gap-2 items-end">
+        {/* Team Members - Responsive Layout */}
+        <div className="flex justify-center mb-8 sm:mb-12 px-2 sm:px-4">
+          <div className="grid grid-cols-2 md:flex md:gap-2 gap-3 sm:gap-4 md:items-end w-full md:w-auto justify-items-center">
             {teamMembers.map((member, index) => (
               <div 
                 key={index}
@@ -205,32 +217,47 @@ const Team = () => {
                 onClick={() => setSelectedMember(member)}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                style={{ marginBottom: `${index % 2 === 0 ? '30px' : '0px'}` }}
+                style={{ marginBottom: !isMobile && index % 2 === 0 ? '30px' : '0' }}
               >
-                <div className="relative overflow-hidden rounded-2xl transition-all duration-300 group-hover:rotate-[3deg] group-hover:scale-110 group-hover:z-10 shadow-lg w-64">
+                <div className="relative overflow-hidden rounded-xl sm:rounded-2xl transition-all duration-300 group-hover:rotate-[3deg] group-hover:scale-110 group-hover:z-10 shadow-lg w-full max-w-[160px] sm:max-w-[200px] md:w-64">
                   <video
                     src={member.video}
-                    className="w-full h-70 object-cover"
+                    className="w-full h-48 sm:h-56 md:h-70 object-cover"
                     muted
-                    loop
+                    loop={!isMobile}
                     playsInline
+                    autoPlay={isMobile && playingVideoIndex === index}
+                    onEnded={() => {
+                      if (isMobile) {
+                        setPlayingVideoIndex((prev) => (prev + 1) % teamMembers.length);
+                      }
+                    }}
                     ref={(el) => {
                       if (el) {
-                        if (hoveredIndex === index) {
-                          el.play();
+                        if (isMobile) {
+                          if (playingVideoIndex === index) {
+                            el.play().catch(() => {});
+                          } else {
+                            el.pause();
+                            el.currentTime = 0;
+                          }
                         } else {
-                          el.pause();
-                          el.currentTime = 0;
+                          if (hoveredIndex === index) {
+                            el.play().catch(() => {});
+                          } else {
+                            el.pause();
+                            el.currentTime = 0;
+                          }
                         }
                       }
                     }}
                   />
                   {/* Name and Position Overlay on Hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-                    <h3 className="text-white text-lg font-bold mb-1">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3 sm:p-4">
+                    <h3 className="text-white text-sm sm:text-base md:text-lg font-bold mb-0.5 sm:mb-1">
                       {member.name}
                     </h3>
-                    <p className="text-white/90 text-sm">
+                    <p className="text-white/90 text-xs sm:text-sm">
                       {member.role}
                     </p>
                   </div>
@@ -242,7 +269,7 @@ const Team = () => {
 
         {/* CTA Button */}
         <div className="text-center">
-          <button className="bg-purple-600 text-white px-10 py-4 rounded-full hover:bg-purple-700 transition-all duration-300 text-lg font-semibold shadow-lg hover:shadow-xl">
+          <button className="bg-purple-600 text-white px-8 sm:px-10 py-3 sm:py-4 rounded-full hover:bg-purple-700 transition-all duration-300 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl">
             Contact us
           </button>
         </div>
@@ -250,54 +277,56 @@ const Team = () => {
 
       {/* Modal Popup */}
       {selectedMember && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-5" onClick={() => setSelectedMember(null)}>
-          <div className="bg-white rounded-3xl max-w-3xl w-full shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-5" onClick={() => setSelectedMember(null)}>
+          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-3xl w-full shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <div className="relative">
               {/* Close Button */}
               <button 
                 onClick={() => setSelectedMember(null)}
-                className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition-colors z-10"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition-colors z-10"
               >
-                <X className="w-5 h-5 text-gray-700" />
+                <X className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
               </button>
 
-              <div className="grid md:grid-cols-5 gap-0">
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-0">
                 {/* Left - Video */}
-                <div className="md:col-span-2 bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center p-8">
+                <div className="md:col-span-2 bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center p-6 sm:p-8">
                   <video
                     src={selectedMember.video}
-                    className="w-full h-full object-cover shadow-xl rounded-lg"
+                    className="w-full h-full object-cover shadow-xl rounded-lg max-h-[250px] sm:max-h-none"
                     autoPlay
                     loop
+                    muted
+                    playsInline
                   />
                 </div>
 
                 {/* Right - Content */}
-                <div className="md:col-span-3 p-8">
-                  <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                <div className="md:col-span-3 p-6 sm:p-8">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 sm:mb-2">
                     {selectedMember.name}
                   </h2>
-                  <p className="text-purple-600 font-semibold mb-6">
+                  <p className="text-purple-600 font-semibold mb-4 sm:mb-6 text-sm sm:text-base">
                     {selectedMember.role}
                   </p>
                   
-                  <p className="text-gray-700 leading-relaxed mb-8">
+                  <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-6 sm:mb-8">
                     {selectedMember.description}
                   </p>
 
                   {/* Contact Buttons */}
-                  <div className="space-y-3">
-                    <button className="w-full bg-purple-600 text-white py-3 rounded-full hover:bg-purple-700 transition-colors font-semibold flex items-center justify-center gap-2">
-                      <Mail className="w-5 h-5" />
+                  <div className="space-y-2.5 sm:space-y-3">
+                    <button className="w-full bg-purple-600 text-white py-2.5 sm:py-3 rounded-full hover:bg-purple-700 transition-colors font-semibold flex items-center justify-center gap-2 text-sm sm:text-base">
+                      <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
                       Connect with me
                     </button>
                     
-                    <div className="flex gap-3">
-                      <button className="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-full hover:border-purple-600 hover:text-purple-600 transition-colors font-semibold flex items-center justify-center gap-2">
-                        <Linkedin className="w-5 h-5" />
+                    <div className="flex gap-2.5 sm:gap-3">
+                      <button className="flex-1 border-2 border-gray-300 text-gray-700 py-2.5 sm:py-3 rounded-full hover:border-purple-600 hover:text-purple-600 transition-colors font-semibold flex items-center justify-center gap-1.5 sm:gap-2 text-sm sm:text-base">
+                        <Linkedin className="w-4 h-4 sm:w-5 sm:h-5" />
                         LinkedIn
                       </button>
-                      <button className="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-full hover:border-purple-600 hover:text-purple-600 transition-colors font-semibold">
+                      <button className="flex-1 border-2 border-gray-300 text-gray-700 py-2.5 sm:py-3 rounded-full hover:border-purple-600 hover:text-purple-600 transition-colors font-semibold text-sm sm:text-base">
                         Website
                       </button>
                     </div>
@@ -310,13 +339,13 @@ const Team = () => {
       )}
 
       {/* Footer */}
-      <footer className="bg-gray-900 py-8 sm:py-12 border-t border-gray-800">
+      <footer className="bg-gray-900 py-6 sm:py-8 md:py-12 border-t border-gray-800">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gray-400 text-sm sm:text-base">© 2025 Sales Capital. All rights reserved.</p>
-          <div className="flex justify-center space-x-6 mt-6">
-            <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors text-sm">Privacy Policy</a>
-            <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors text-sm">Terms of Service</a>
-            <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors text-sm">Contact</a>
+          <p className="text-gray-400 text-xs sm:text-sm md:text-base">© 2025 Sales Capital. All rights reserved.</p>
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 mt-4 sm:mt-6">
+            <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors text-xs sm:text-sm">Privacy Policy</a>
+            <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors text-xs sm:text-sm">Terms of Service</a>
+            <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors text-xs sm:text-sm">Contact</a>
           </div>
         </div>
       </footer>
